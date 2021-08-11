@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
+using MaterialWebAPI.Application.Models;
 using MaterialWebAPI.Domain.Entities;
 using MaterialWebAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MaterialWebAPI.Application.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/materials/")]
     [ApiController]
     public class MaterialWebAPIController : ControllerBase
     {
@@ -23,38 +21,134 @@ namespace MaterialWebAPI.Application.Controllers
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        // GET: api/MaterialWebAPI
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet(":id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Get(string id)
         {
-            return new string[] { "value1", "value2" };
+            var material = _repository.Select(id);
+
+            if (material == null)
+            {
+                return NotFound("The reference material with id :" + id + " " + "was not Found in the Database!");
+            }
+
+
+            var materialResult = new MaterialModel()
+            {
+                Id = material.Id,
+                Name = material.Name,
+                IsVisible = material.IsVisible,
+                TypeOfPhase = material.TypeOfPhase,
+                MaterialFunction = material.MaterialFunction
+            };
+
+            return Ok(materialResult);
         }
 
-        // GET: api/MaterialWebAPI/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetAll()
         {
-            return "value";
+            List<MaterialModel> materialsModel = new();
+
+            var materials = _repository.SelectAll();
+
+            foreach (var material in materials)
+            {
+                var materialResult = new MaterialModel()
+            {
+                Id = material.Id,
+                Name = material.Name,
+                IsVisible = material.IsVisible,
+                TypeOfPhase = material.TypeOfPhase,
+                MaterialFunction = material.MaterialFunction
+            };
+
+                materialsModel.Add(materialResult);
+            }
+
+            return Ok(materialsModel);
         }
 
-        // POST: api/MaterialWebAPI
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Create(MaterialModel materialModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Sorry, the data model is invalid :(");
+
+            var material = _mapper.Map<Material>(materialModel);
+            
+            try
+            {
+                _repository.Create(material);
+            }
+            catch (RepositoryException ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException);
+                return StatusCode(500);
+            }
+
+            if (string.IsNullOrWhiteSpace(materialModel.Id))
+                return CreatedAtAction(nameof(Get), new { material.Id });
+
+            return Ok(material);
         }
 
-        // PUT: api/MaterialWebAPI/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut(":id")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Update(string id, MaterialModel materialModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Sorry, the data model is invalid :(");
+
+            var material = _mapper.Map<Material>(materialModel);
+
+            material.Id = id;
+            
+            try
+            {
+                _repository.Update(material.Id, material);
+            }
+            catch (RepositoryException ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException);
+                return StatusCode(500);
+            }
+
+            return Ok(material);
         }
 
-        // DELETE: api/MaterialWebAPI/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+
+        [HttpDelete(":id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Delete(string id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Sorry, the data model is invalid :(");
+            try
+            {
+                _repository.Delete(id);
+            }
+            catch (RepositoryException ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException);
+                return StatusCode(500);
+            }
+
+            return Ok(id);
         }
     }
 }
