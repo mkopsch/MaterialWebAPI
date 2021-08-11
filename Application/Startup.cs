@@ -1,5 +1,6 @@
 using MaterialWebAPI.Infrastructure.Context;
 using MaterialWebAPI.Infrastructure.Persistence;
+using MaterialWebAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +26,10 @@ namespace MaterialWebAPI.Application
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MaterialWebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MaterialAPI", Version = "v1" });
             });
+
+            services.AddSingleton(typeof(IRepository<>), typeof(RavenDbRepository<>));
 
             services.AddSingleton<IRavenDbContext, RavenDbContext>();
 
