@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaterialWebAPI.Domain.Entities;
+using MaterialWebAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MaterialWebAPI.Application.Controllers
 {
@@ -11,6 +14,15 @@ namespace MaterialWebAPI.Application.Controllers
     [ApiController]
     public class MaterialWebAPIController : ControllerBase
     {
+        private readonly IRepository<Material> _repository;
+        private readonly ILogger<MaterialWebAPIController> _logger;
+        
+        public MaterialWebAPIController(IRepository<Material> repository, ILogger<MaterialWebAPIController> logger)
+        {
+            _repository = repository;
+            _logger = logger;
+        }
+
         // GET: api/MaterialWebAPI
         [HttpGet]
         public IEnumerable<string> Get()
