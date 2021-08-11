@@ -80,6 +80,7 @@ namespace MaterialWebAPI.Application.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Create(MaterialModel materialModel)
         {
+
             if (!ModelState.IsValid)
                 return BadRequest("Sorry, the data model is invalid :(");
 
@@ -108,10 +109,17 @@ namespace MaterialWebAPI.Application.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Update(string id, MaterialModel materialModel)
         {
+            var material = _repository.Select(id);
+
+            if (material == null)
+            {
+                return NotFound("The reference material with id :" + id + " " + "was not Found in the Database!");
+            }
+
             if (!ModelState.IsValid)
                 return BadRequest("Sorry, the data model is invalid :(");
 
-            var material = _mapper.Map<Material>(materialModel);
+            material = _mapper.Map<Material>(materialModel);
 
             material.Id = id;
             
@@ -136,8 +144,13 @@ namespace MaterialWebAPI.Application.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(string id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest("Sorry, the data model is invalid :(");
+            var material = _repository.Select(id);
+
+            if (material == null)
+            {
+                return NotFound("The reference material with id :" + id + " " + "was not Found in the Database!");
+            }
+            
             try
             {
                 _repository.Delete(id);
