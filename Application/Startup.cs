@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace MaterialWebAPI
+namespace MaterialWebAPI.Application
 {
     public class Startup
     {
@@ -41,7 +41,11 @@ namespace MaterialWebAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MaterialWebAPI v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MaterialWebAPI v1");
+                    c.RoutePrefix = "";
+                }
+                );
             }
 
             app.UseHttpsRedirection();

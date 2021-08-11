@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MaterialAPI.Application.Controllers
+namespace MaterialWebAPI.Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
