@@ -1,3 +1,4 @@
+using MaterialWebAPI.Infrastructure.Context;
 using MaterialWebAPI.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,8 @@ namespace MaterialWebAPI.Application
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MaterialWebAPI", Version = "v1" });
             });
+
+            services.AddSingleton<IRavenDbContext, RavenDbContext>();
 
             services.Configure<PersistenceSettings>(Configuration.GetSection("Database"));
         }
