@@ -1,3 +1,5 @@
+using MaterialWebAPI.Application.Models;
+using MaterialWebAPI.Domain.Entities;
 using MaterialWebAPI.Infrastructure.Context;
 using MaterialWebAPI.Infrastructure.Persistence;
 using MaterialWebAPI.Infrastructure.Repositories;
@@ -34,6 +36,11 @@ namespace MaterialWebAPI.Application
             services.AddSingleton<IRavenDbContext, RavenDbContext>();
 
             services.Configure<PersistenceSettings>(Configuration.GetSection("Database"));
+
+            services.AddSingleton(new AutoMapper.MapperConfiguration(config =>
+            {
+                config.CreateMap<MaterialModel, Material>();
+            }).CreateMapper());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
