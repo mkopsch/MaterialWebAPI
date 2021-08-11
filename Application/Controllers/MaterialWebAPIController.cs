@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MaterialWebAPI.Domain.Entities;
 using MaterialWebAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -16,8 +17,9 @@ namespace MaterialWebAPI.Application.Controllers
     {
         private readonly IRepository<Material> _repository;
         private readonly ILogger<MaterialWebAPIController> _logger;
+        private readonly IMapper _mapper;
         
-        public MaterialWebAPIController(IRepository<Material> repository, ILogger<MaterialWebAPIController> logger)
+        public MaterialWebAPIController(IRepository<Material> repository, ILogger<MaterialWebAPIController> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
