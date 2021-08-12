@@ -21,6 +21,10 @@ namespace MaterialWebAPI.Domain.Entities
             MaterialFunction = materialFunction;
         }
 
-        
+        public Material()
+        {
+            
+        }
+
     }
 }

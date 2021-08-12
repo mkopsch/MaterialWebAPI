@@ -12,5 +12,10 @@ namespace MaterialWebAPI.Domain.Entities
 
             MaxTemperature = maxTemperature; 
         }
+
+        public MaterialFunction()
+        {
+
+        }
     }
 }
