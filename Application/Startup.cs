@@ -31,13 +31,9 @@ namespace MaterialWebAPI.Application
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MaterialWebAPI", Version = "v1" });
             });
 
-            // services.AddSingleton(typeof(IRepository<>), typeof(RavenDbRepository<>));
+            services.AddSingleton(typeof(IRepository<>), typeof(RavenDbRepository<>));
 
-            // services.AddSingleton<IRavenDbContext, RavenDbContext>();
-
-            services.AddSingleton(typeof(IRepository<Material>), typeof(MockDbRepository));
-
-            services.AddSingleton<IMockDbContext, MockDbContext>();
+            services.AddSingleton<IRavenDbContext, RavenDbContext>();
 
             services.Configure<PersistenceSettings>(Configuration.GetSection("Database"));
 

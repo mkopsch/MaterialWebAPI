@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using MaterialWebAPI.Domain.Entities;
 
 namespace MaterialWebAPI.Infrastructure.Context
@@ -34,7 +32,7 @@ namespace MaterialWebAPI.Infrastructure.Context
 
             
             }
-            catch(Exception ex)
+            catch
             {
 
                 _localStore = new List<Material>();
