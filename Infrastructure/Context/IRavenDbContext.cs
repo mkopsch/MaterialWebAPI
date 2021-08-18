@@ -4,6 +4,6 @@ namespace MaterialWebAPI.Infrastructure.Context
 {
     public interface IRavenDbContext
     {
-        public IDocumentStore store { get;}
+        public IDocumentStore store { get; }
     }
 }

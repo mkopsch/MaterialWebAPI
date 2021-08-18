@@ -5,7 +5,7 @@ namespace MaterialWebAPI.Application.Models
 {
     public class MinTemperatureIsNotHigherThanMaxTemperatureAttribut : ValidationAttribute
     {
-        public string GetErrorMessage() =>  $"MinTemperature Is Equal Or Higher Than MaxTemperature";
+        public string GetErrorMessage() => $"MinTemperature Is Equal Or Higher Than MaxTemperature";
 
         protected override ValidationResult IsValid(object value,
             ValidationContext validationContext)

@@ -16,7 +16,7 @@ namespace MaterialWebAPI.Application.Controllers
         private readonly IRepository<Material> _repository;
         private readonly ILogger<MaterialWebAPIController> _logger;
         private readonly IMapper _mapper;
-        
+
         public MaterialWebAPIController(IRepository<Material> repository, ILogger<MaterialWebAPIController> logger, IMapper mapper)
         {
             _repository = repository;
@@ -59,13 +59,13 @@ namespace MaterialWebAPI.Application.Controllers
             foreach (var material in materials)
             {
                 var materialResult = new MaterialModel()
-            {
-                Id = material.Id,
-                Name = material.Name,
-                IsVisible = material.IsVisible,
-                TypeOfPhase = material.TypeOfPhase,
-                MaterialFunction = material.MaterialFunction
-            };
+                {
+                    Id = material.Id,
+                    Name = material.Name,
+                    IsVisible = material.IsVisible,
+                    TypeOfPhase = material.TypeOfPhase,
+                    MaterialFunction = material.MaterialFunction
+                };
 
                 materialsModel.Add(materialResult);
             }
@@ -85,7 +85,7 @@ namespace MaterialWebAPI.Application.Controllers
                 return BadRequest("Sorry, the data model is invalid :(");
 
             var material = _mapper.Map<Material>(materialModel);
-            
+
             try
             {
                 _repository.Create(material);
@@ -122,7 +122,7 @@ namespace MaterialWebAPI.Application.Controllers
             material = _mapper.Map<Material>(materialModel);
 
             material.Id = id;
-            
+
             try
             {
                 _repository.Update(material.Id, material);
@@ -150,7 +150,7 @@ namespace MaterialWebAPI.Application.Controllers
             {
                 return NotFound("The reference material with id :" + id + " " + "was not Found in the Database!");
             }
-            
+
             try
             {
                 _repository.Delete(id);

@@ -18,7 +18,7 @@ namespace MaterialWebAPI.Infrastructure.Repositories
 
         public void Create(Material element)
         {
-            
+
             try
             {
                 _context.store.Add(element);
@@ -32,16 +32,19 @@ namespace MaterialWebAPI.Infrastructure.Repositories
 
         public void Update(string id, Material replaceElement)
         {
-            
+
             try
             {
                 var element = Select(id);
 
-                _context.store.Where(c => c.Id.Equals(id)).Select(c => { c.Name = replaceElement.Name; 
-                                                                         c.IsVisible = replaceElement.IsVisible;
-                                                                         c.TypeOfPhase = replaceElement.TypeOfPhase;
-                                                                         c.MaterialFunction = replaceElement.MaterialFunction;
-                                                                        return c; }).ToList();
+                _context.store.Where(c => c.Id.Equals(id)).Select(c =>
+                {
+                    c.Name = replaceElement.Name;
+                    c.IsVisible = replaceElement.IsVisible;
+                    c.TypeOfPhase = replaceElement.TypeOfPhase;
+                    c.MaterialFunction = replaceElement.MaterialFunction;
+                    return c;
+                }).ToList();
             }
             catch (Exception ex)
             {

@@ -7,10 +7,10 @@ namespace MaterialWebAPI.Domain.Entities
         public string Name { get; set; }
 
         public bool IsVisible { get; set; }
-    
-        public string TypeOfPhase {get; set;}
 
-        public MaterialFunction MaterialFunction {get; set;}
+        public string TypeOfPhase { get; set; }
+
+        public MaterialFunction MaterialFunction { get; set; }
 
         public Material(string id, string name, bool isVisible, string typeOfPhase, MaterialFunction materialFunction)
         {
@@ -23,7 +23,7 @@ namespace MaterialWebAPI.Domain.Entities
 
         public Material()
         {
-            
+
         }
 
     }

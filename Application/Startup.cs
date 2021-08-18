@@ -50,7 +50,8 @@ namespace MaterialWebAPI.Application
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => {
+                app.UseSwaggerUI(c =>
+                {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "MaterialWebAPI v1");
                     c.RoutePrefix = "";
                 }

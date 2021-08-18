@@ -10,13 +10,13 @@ namespace MaterialWebAPI.Application.Models
         public string Name { get; set; }
         [Required]
         public bool IsVisible { get; set; }
-        
+
         [Required]
         [IsTypeOfPhaseAttribute]
-        public string TypeOfPhase {get; set;}
-        
+        public string TypeOfPhase { get; set; }
+
         [Required]
         [MinTemperatureIsNotHigherThanMaxTemperatureAttribut]
-        public MaterialFunction MaterialFunction {get; set;}
+        public MaterialFunction MaterialFunction { get; set; }
     }
 }

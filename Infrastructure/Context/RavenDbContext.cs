@@ -19,27 +19,30 @@ namespace MaterialWebAPI.Infrastructure.Context
         {
             _persistenceSettings = settings.CurrentValue;
 
-              _localStore = new DocumentStore(){
-                  Database = _persistenceSettings.DatabaseName,
-                  Urls = _persistenceSettings.Urls
-              };
+            _localStore = new DocumentStore()
+            {
+                Database = _persistenceSettings.DatabaseName,
+                Urls = _persistenceSettings.Urls
+            };
 
-              _localStore.Initialize();
+            _localStore.Initialize();
 
-              EnsureDatabaseIsCreated();
+            EnsureDatabaseIsCreated();
         }
 
 
-        public void EnsureDatabaseIsCreated() {
-            try 
+        public void EnsureDatabaseIsCreated()
+        {
+            try
             {
-            _localStore.Maintenance.ForDatabase(_persistenceSettings.DatabaseName).Send(new GetStatisticsOperation());
+                _localStore.Maintenance.ForDatabase(_persistenceSettings.DatabaseName).Send(new GetStatisticsOperation());
             }
-            catch(DatabaseDoesNotExistException){
+            catch (DatabaseDoesNotExistException)
+            {
 
                 _localStore.Maintenance.Server.Send(new CreateDatabaseOperation(new DatabaseRecord(_persistenceSettings.DatabaseName)));
             }
         }
-        
+
     }
 }

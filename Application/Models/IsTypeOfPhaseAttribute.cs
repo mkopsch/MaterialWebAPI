@@ -5,9 +5,9 @@ namespace MaterialWebAPI.Application.Models
 {
     public class IsTypeOfPhaseAttribute : ValidationAttribute
     {
-        private string[] TypesOfPhases = {"solid", "liquid"};
+        private string[] TypesOfPhases = { "solid", "liquid" };
 
-        public string GetErrorMessage() =>  $"Type of Phase is not valid";
+        public string GetErrorMessage() => $"Type of Phase is not valid";
 
         protected override ValidationResult IsValid(object value,
             ValidationContext validationContext)
@@ -25,9 +25,9 @@ namespace MaterialWebAPI.Application.Models
         }
         public bool IsTypeOfPhase(string typeOfPhase)
         {
-            if(TypesOfPhases.Any(typeOfPhase.Contains))
-            return true;
-            
+            if (TypesOfPhases.Any(typeOfPhase.Contains))
+                return true;
+
             return false;
         }
     }

@@ -16,7 +16,7 @@ namespace MaterialWebAPI.Infrastructure.Repositories
 
         public void Create(T element)
         {
-            
+
             try
             {
                 using var session = _context.store.OpenSession();
@@ -34,7 +34,7 @@ namespace MaterialWebAPI.Infrastructure.Repositories
 
         public void Update(string id, T replaceElement)
         {
-            
+
             try
             {
                 using var session = _context.store.OpenSession();

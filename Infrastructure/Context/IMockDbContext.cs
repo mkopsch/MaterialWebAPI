@@ -5,6 +5,6 @@ namespace MaterialWebAPI.Infrastructure.Context
 {
     public interface IMockDbContext
     {
-         List<Material> store {get;}
+        List<Material> store { get; }
     }
 }
