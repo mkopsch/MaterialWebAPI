@@ -14,7 +14,9 @@ namespace MaterialWebAPI.Application
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                    .UseUrls("https://localhost:5001;https://MARTINS-MBP:5001;http://MARTINS-MBP:5000")
+                    .UseStartup<Startup>();
                 });
     }
 }
